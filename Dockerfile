@@ -31,4 +31,4 @@ RUN chmod 777 /var/speedtest/scripts/speedtest.sh
 RUN chmod 777 /var/speedtest/config/run.sh
 
 #CMD [ "speedtest", "--accept-license", "--accept-gdpr", "--server-id=2198" ]
-CMD [ "/var/speedtest/config/run.sh" ]
+ENTRYPOINT [ "/var/speedtest/config/run.sh" ]
