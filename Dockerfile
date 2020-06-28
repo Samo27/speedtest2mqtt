@@ -26,8 +26,8 @@ RUN mkdir /var/speedtest/scripts
 ADD ./scripts/. /var/speedtest/scripts/
 ADD ./config/. /var/speedtest/config/
 
-RUN chmod 777 /var/speedtest/scripts/.
-RUN chmod 777 /var/speedtest/config/.
+RUN chmod 777 /var/speedtest/scripts/speedtest.sh
+RUN chmod 777 /var/speedtest/config/run.sh
 
 #CMD [ "speedtest", "--accept-license", "--accept-gdpr", "--server-id=2198" ]
 CMD [ "/var/speedtest/config/run.sh" ]
