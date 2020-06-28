@@ -11,7 +11,8 @@ RUN apt-get install -y \
     mosquitto-clients \
     jq \
     ssh \
-    bash
+    bash \
+    cron
 RUN export INSTALL_KEY=379CE192D401AB61 && \
     export DEB_DISTRO=$(lsb_release -sc) && \
     apt-key adv --keyserver keyserver.ubuntu.com --recv-keys $INSTALL_KEY && \
