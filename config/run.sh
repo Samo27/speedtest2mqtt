@@ -17,5 +17,6 @@ crontab /var/speedtest/config/crontab
 
 echo "Starting Cronjob"
 cron -l 2 -f &
+#cron -f &
 
 exit 0;
