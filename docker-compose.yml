@@ -1,0 +1,15 @@
+version: '3'
+services:
+  speedtest:
+    container_name: speedtest
+    restart: unless-stopped
+    network_mode: HOST
+    ports:
+        - 3222:22
+    environment:
+        CRONJOB_ITERATION: '15'
+        MQTT_HOST: '192.168.1.14'
+        MQTT_PORT: '1883'
+        MQTT_TOPIC: 'Domek/speedtes'
+        MQTT_OPTIONS: ''
+        SPEEDTEST_OPTIONS: '--server-id=2198'

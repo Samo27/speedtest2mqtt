@@ -1,0 +1,1 @@
+0 * * * * /var/speedtest/scripts/speedtest.sh >/dev/stdout 2>&1
