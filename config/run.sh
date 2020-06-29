@@ -30,6 +30,7 @@ while true
 do
     # watch /var/log/cron.log restarting if necessary
     cat /var/log/cron.log & wait $!
+    sleep 10m
 done
 
 exit 0;
