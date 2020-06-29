@@ -19,4 +19,17 @@ echo "Starting Cronjob"
 #cron -l 2 -f &
 #cron -f
 
-#exit 0;
+# start cron
+service cron start
+
+# trap SIGINT and SIGTERM signals and gracefully exit
+trap "service cron stop; kill \$!; exit" SIGINT SIGTERM
+
+# start "daemon"
+while true
+do
+    # watch /var/log/cron.log restarting if necessary
+    cat /var/log/cron.log & wait $!
+done
+
+exit 0;
