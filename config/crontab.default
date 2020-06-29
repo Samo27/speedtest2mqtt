@@ -1,1 +1,1 @@
-0 * * * * root /var/speedtest/scripts/speedtest.sh >> /var/log/cron.log 2>&1
+0 * * * * /var/speedtest/scripts/speedtest.sh >> /var/log/cron.log 2>&1

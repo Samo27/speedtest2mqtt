@@ -21,12 +21,14 @@ RUN apt-get install speedtest
 RUN mkdir /var/speedtest
 RUN mkdir /var/speedtest/config
 RUN mkdir /var/speedtest/scripts
+RUN touch /var/log/cron.log
 
 ADD ./scripts/. /var/speedtest/scripts/
 ADD ./config/. /var/speedtest/config/
 
 RUN chmod 777 /var/speedtest/scripts/speedtest.sh
 RUN chmod 777 /var/speedtest/config/run.sh
+RUN chmod 777 /var/log/cron.log
 
 #CMD [ "speedtest", "--accept-license", "--accept-gdpr", "--server-id=2198" ]
 CMD [ "/var/speedtest/config/run.sh" ]
