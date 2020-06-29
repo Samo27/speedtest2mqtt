@@ -1,1 +1,1 @@
-0 * * * * root /var/speedtest/scripts/speedtest.sh >> /proc/1/fd/1 2>/proc/1/fd/2
+0 * * * * /var/speedtest/scripts/speedtest.sh >> /proc/1/fd/1 2>/proc/1/fd/2
