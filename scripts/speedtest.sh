@@ -52,11 +52,13 @@ if [[ $OUTPUT == $zacetek ]] && [[ $OUTPUT == $konec ]]; then
     echo "$PUB_CMD $PARAMS"
 
     REZULTAT=$(echo $OUTPUT | jq '.download.bandwidth')
+    REZULTAT=$(echo $(($REZULTAT / 1250)) | sed 's/..$/.&/')
     PARAMS="-t \"$MQTT_TOPIC_SCRIPT/download\" -m \"$REZULTAT\""
     eval "$PUB_CMD $PARAMS"
     echo "$PUB_CMD $PARAMS"
 
     REZULTAT=$(echo $OUTPUT | jq '.upload.bandwidth')
+    REZULTAT=$(echo $(($REZULTAT / 1250)) | sed 's/..$/.&/')
     PARAMS="-t \"$MQTT_TOPIC_SCRIPT/upload\" -m \"$REZULTAT\""
     eval "$PUB_CMD $PARAMS"
     echo "$PUB_CMD $PARAMS"
