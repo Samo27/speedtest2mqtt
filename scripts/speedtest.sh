@@ -86,7 +86,7 @@ if [[ $OUTPUT == $zacetek ]] && [[ $OUTPUT == $konec ]]; then
 
 fi
 
-if [[ ! -z ${ASUS_USER_SCRIPT}]] && [[ ! -z ${ASUS_PWD_SCRIPT}]]; then
+if [[ $ASUS_USER_SCRIPT != "" ]] && [[ $ASUS_PWD_SCRIPT != "" ]]; then
     hitrost=$(sshpass -p $ASUS_PWD_SCRIPT ssh $ASUS_IP_SCRIPT -l $ASUS_USER_SCRIPT -p 2222 -o StrictHostKeyChecking=accept-new 'bash -s' < /var/speedtest/scripts/wanspeed.sh)
     read -a polje <<< $hitrost
     REZULTAT=$(echo "((${polje[0]} - ${polje[2]})/10)/125000" | bc -l | xargs printf %0.2f)
