@@ -5,9 +5,12 @@ services:
     restart: unless-stopped
     network_mode: HOST
     environment:
-        CRONJOB_ITERATION: '15'
+        CRONJOB_ITERATION: '30'
         MQTT_HOST: '192.168.1.14'
         MQTT_PORT: '1883'
-        MQTT_TOPIC: 'Domek/speedtes'
+        MQTT_TOPIC: 'Domek/speedtest'
         MQTT_OPTIONS: ''
         SPEEDTEST_OPTIONS: '--server-id=2198'
+        ASUS_USER: ''
+        ASUS_PWD: ''
+        ASUS_IP: ''

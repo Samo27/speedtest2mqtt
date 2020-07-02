@@ -25,6 +25,25 @@ else
     MQTT_OPTIONS_SCRIPT=${MQTT_OPTIONS}
 fi
 
+# parameters for ASUS
+if [[ -z ${ASUS_USER} ]]; then
+    ASUS_USER_SCRIPT=""
+else
+    ASUS_USER_SCRIPT=${ASUS_USER}
+fi
+
+if [[ -z ${ASUS_PWD} ]]; then
+    ASUS_PWD_SCRIPT=""
+else
+    ASUS_PWD_SCRIPT=${ASUS_PWD}
+fi
+
+if [[ -z ${ASUS_IP} ]]; then
+    ASUS_IP_SCRIPT=""
+else
+    ASUS_IP_SCRIPT=${ASUS_IP}
+fi
+
 PARAMS=$MQTT_HOST_SCRIPT" "$MQTT_PORT_SCRIPT" "$MQTT_OPTIONS_SCRIPT
 
 # adjust path if neccessary, add arguments here for host/port/user/password/retain/tls
@@ -35,6 +54,8 @@ if [[ -z ${SPEEDTEST_OPTIONS} ]]; then
 else
     SPEEDTEST_OPTIONS_SCRIPT="${SPEEDTEST_OPTIONS}"
 fi
+
+echo $(date)
 
 # adjust path if neccessary, add --server argument if you want to use specific speedtest server
 OUTPUT=$(/usr/bin/speedtest -f json --accept-license --accept-gdpr $SPEEDTEST_OPTIONS_SCRIPT)
@@ -60,6 +81,21 @@ if [[ $OUTPUT == $zacetek ]] && [[ $OUTPUT == $konec ]]; then
     REZULTAT=$(echo $OUTPUT | jq '.upload.bandwidth')
     REZULTAT=$(echo $(($REZULTAT / 1250)) | sed 's/..$/.&/')
     PARAMS="-t \"$MQTT_TOPIC_SCRIPT/upload\" -m \"$REZULTAT\""
+    eval "$PUB_CMD $PARAMS"
+    echo "$PUB_CMD $PARAMS"
+
+fi
+
+if [[ ! -z ${ASUS_USER_SCRIPT}]] && [[ ! -z ${ASUS_PWD_SCRIPT}]]; then
+    hitrost=$(sshpass -p $ASUS_PWD_SCRIPT ssh $ASUS_IP_SCRIPT -l $ASUS_USER_SCRIPT -p 2222 -o StrictHostKeyChecking=accept-new 'bash -s' < /var/speedtest/scripts/wanspeed.sh)
+    read -a polje <<< $hitrost
+    REZULTAT=$(echo "((${polje[0]} - ${polje[2]})/10)/125000" | bc -l | xargs printf %0.2f)
+    PARAMS="-t \"$MQTT_TOPIC_SCRIPT/wandownload\" -m \"$REZULTAT\""
+    eval "$PUB_CMD $PARAMS"
+    echo "$PUB_CMD $PARAMS"
+
+    REZULTAT=$(echo "((${polje[1]} - ${polje[3]})/10)/125000" | bc -l | xargs printf %0.2f)
+    PARAMS="-t \"$MQTT_TOPIC_SCRIPT/wanupload\" -m \"$REZULTAT\""
     eval "$PUB_CMD $PARAMS"
     echo "$PUB_CMD $PARAMS"
 

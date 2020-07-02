@@ -10,7 +10,9 @@ RUN apt-get install -y \
     jq \
     ssh \
     bash \
-    cron
+    cron \
+    sshpass \
+    bc
 RUN export INSTALL_KEY=379CE192D401AB61 && \
     export DEB_DISTRO=$(lsb_release -sc) && \
     apt-key adv --keyserver keyserver.ubuntu.com --recv-keys $INSTALL_KEY && \
@@ -27,10 +29,8 @@ ADD ./scripts/. /var/speedtest/scripts/
 ADD ./config/. /var/speedtest/config/
 
 RUN chmod 777 /var/speedtest/scripts/speedtest.sh
+RUN chmod 777 /var/speedtest/scripts/wanspeed.sh
 RUN chmod 777 /var/speedtest/config/run.sh
 RUN chmod 777 /var/log/cron.log
 
-#CMD [ "speedtest", "--accept-license", "--accept-gdpr", "--server-id=2198" ]
 CMD [ "/var/speedtest/config/run.sh" ]
-
-#ENTRYPOINT [ "cron", "-f" ]
