@@ -44,6 +44,12 @@ else
     ASUS_IP_SCRIPT=${ASUS_IP}
 fi
 
+if [[ -z ${ASUS_PORT} ]]; then
+    ASUS_PORT_SCRIPT=""
+else
+    ASUS_PORT_SCRIPT=${ASUS_PORT}
+fi
+
 PARAMS=$MQTT_HOST_SCRIPT" "$MQTT_PORT_SCRIPT" "$MQTT_OPTIONS_SCRIPT
 
 # adjust path if neccessary, add arguments here for host/port/user/password/retain/tls
@@ -86,8 +92,11 @@ if [[ $OUTPUT == $zacetek ]] && [[ $OUTPUT == $konec ]]; then
 
 fi
 
-if [[ $ASUS_USER_SCRIPT != "" ]] && [[ $ASUS_PWD_SCRIPT != "" ]]; then
-    hitrost=$(sshpass -p $ASUS_PWD_SCRIPT ssh $ASUS_IP_SCRIPT -l $ASUS_USER_SCRIPT -p 2222 -o StrictHostKeyChecking=accept-new 'bash -s' < /var/speedtest/scripts/wanspeed.sh)
+echo $ASUS_USER_SCRIPT
+
+if [[ ! -z "$ASUS_USER_SCRIPT" ]]; then
+    echo "Trenutna zasedenost interneta:"
+    hitrost=$(sshpass -p $ASUS_PWD_SCRIPT /usr/bin/ssh $ASUS_IP_SCRIPT -l $ASUS_USER_SCRIPT -p $ASUS_PORT_SCRIPT -o StrictHostKeyChecking=accept-new 'bash -s' < /var/speedtest/scripts/wanspeed.sh)
     read -a polje <<< $hitrost
     REZULTAT=$(echo "((${polje[0]} - ${polje[2]})/10)/125000" | bc -l | xargs printf %0.2f)
     PARAMS="-t \"$MQTT_TOPIC_SCRIPT/wandownload\" -m \"$REZULTAT\""
