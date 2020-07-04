@@ -9,17 +9,17 @@ else
     CRONJOB_ITERATION_SCRIPT=${CRONJOB_ITERATION}
 fi
 
-#if [[ ${CRONJOB_ITERATION} ]]; then
-    sed -i -e "s/0/*\/$CRONJOB_ITERATION_SCRIPT/g" /var/speedtest/config/crontab
-    #sed  '0,/\[0\]/i $CRONJOB_ITERATION_SCRIPT' /var/speedtest/config/crontab
-#fi
+sed -i -e "s/0/*\/$CRONJOB_ITERATION_SCRIPT/g" /var/speedtest/config/crontab
+
 crontab /var/speedtest/config/crontab
 
-echo "Starting Cronjob"
-#cron -l 2 -f &
-#cron -f
+crontab -l | { echo "0 0 * * * date > /var/log/cron.log"; cat; } | crontab -
 
-# start cron
+
+
+env > $HOME/my_vars.setup
+
+echo "Starting Cronjob"
 service cron start
 
 # trap SIGINT and SIGTERM signals and gracefully exit

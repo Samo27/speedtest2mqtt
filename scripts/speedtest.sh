@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# export env variables
+. $HOME/my_vars.setup
+
 # parameters for MQTT
 if [[ -z ${MQTT_HOST} ]]; then
     MQTT_HOST_SCRIPT="-h 192.168.1.14"
@@ -92,10 +95,8 @@ if [[ $OUTPUT == $zacetek ]] && [[ $OUTPUT == $konec ]]; then
 
 fi
 
-echo $ASUS_USER_SCRIPT
 
 if [[ ! -z "$ASUS_USER_SCRIPT" ]]; then
-    echo "Trenutna zasedenost interneta:"
     hitrost=$(sshpass -p $ASUS_PWD_SCRIPT /usr/bin/ssh $ASUS_IP_SCRIPT -l $ASUS_USER_SCRIPT -p $ASUS_PORT_SCRIPT -o StrictHostKeyChecking=accept-new 'bash -s' < /var/speedtest/scripts/wanspeed.sh)
     read -a polje <<< $hitrost
     REZULTAT=$(echo "((${polje[0]} - ${polje[2]})/10)/125000" | bc -l | xargs printf %0.2f)
