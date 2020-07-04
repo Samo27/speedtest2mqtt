@@ -4,50 +4,50 @@
 if [[ -z ${MQTT_HOST} ]]; then
     MQTT_HOST_SCRIPT="-h 192.168.1.14"
 else
-    MQTT_HOST_SCRIPT="-h "$MQTT_HOST
+    MQTT_HOST_SCRIPT="-h "$MQTT_HOST"
 fi
 
 if [[ -z ${MQTT_PORT} ]]; then
     MQTT_PORT_SCRIPT="-p 1883"
 else
-    MQTT_PORT_SCRIPT="-p "$MQTT_PORT
+    MQTT_PORT_SCRIPT="-p "$MQTT_PORT"
 fi
 
 if [[ -z ${MQTT_TOPIC} ]]; then
     MQTT_TOPIC_SCRIPT="Domek/speedtest"
 else
-    MQTT_TOPIC_SCRIPT=${MQTT_TOPIC}
+    MQTT_TOPIC_SCRIPT="${MQTT_TOPIC}"
 fi
 
 if [[ -z ${MQTT_OPTIONS} ]]; then
     MQTT_OPTIONS_SCRIPT=""
 else
-    MQTT_OPTIONS_SCRIPT=${MQTT_OPTIONS}
+    MQTT_OPTIONS_SCRIPT="${MQTT_OPTIONS}"
 fi
 
 # parameters for ASUS
 if [[ -z ${ASUS_USER} ]]; then
     ASUS_USER_SCRIPT=""
 else
-    ASUS_USER_SCRIPT=${ASUS_USER}
+    ASUS_USER_SCRIPT="${ASUS_USER}"
 fi
 
 if [[ -z ${ASUS_PWD} ]]; then
     ASUS_PWD_SCRIPT=""
 else
-    ASUS_PWD_SCRIPT=${ASUS_PWD}
+    ASUS_PWD_SCRIPT="${ASUS_PWD}"
 fi
 
 if [[ -z ${ASUS_IP} ]]; then
     ASUS_IP_SCRIPT=""
 else
-    ASUS_IP_SCRIPT=${ASUS_IP}
+    ASUS_IP_SCRIPT="${ASUS_IP}"
 fi
 
 if [[ -z ${ASUS_PORT} ]]; then
     ASUS_PORT_SCRIPT=""
 else
-    ASUS_PORT_SCRIPT=${ASUS_PORT}
+    ASUS_PORT_SCRIPT="${ASUS_PORT}"
 fi
 
 PARAMS=$MQTT_HOST_SCRIPT" "$MQTT_PORT_SCRIPT" "$MQTT_OPTIONS_SCRIPT
