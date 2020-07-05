@@ -7,13 +7,13 @@
 if [[ -z ${MQTT_HOST} ]]; then
     MQTT_HOST_SCRIPT="-h 192.168.1.14"
 else
-    MQTT_HOST_SCRIPT="-h "$MQTT_HOST"
+    MQTT_HOST_SCRIPT="-h "$MQTT_HOST
 fi
 
 if [[ -z ${MQTT_PORT} ]]; then
     MQTT_PORT_SCRIPT="-p 1883"
 else
-    MQTT_PORT_SCRIPT="-p "$MQTT_PORT"
+    MQTT_PORT_SCRIPT="-p "$MQTT_PORT
 fi
 
 if [[ -z ${MQTT_TOPIC} ]]; then
