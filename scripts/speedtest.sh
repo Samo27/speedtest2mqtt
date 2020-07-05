@@ -66,6 +66,21 @@ fi
 
 echo $(date)
 
+if [[ ! -z "$ASUS_USER_SCRIPT" ]]; then
+    hitrost=$(sshpass -p $ASUS_PWD_SCRIPT /usr/bin/ssh $ASUS_IP_SCRIPT -l $ASUS_USER_SCRIPT -p $ASUS_PORT_SCRIPT -o StrictHostKeyChecking=accept-new 'bash -s' < /var/speedtest/scripts/wanspeed.sh)
+    read -a polje <<< $hitrost
+    REZULTAT=$(echo "((${polje[0]} - ${polje[2]})/10)/125000" | bc -l | xargs printf %0.2f)
+    PARAMS="-t \"$MQTT_TOPIC_SCRIPT/wandownload\" -m \"$REZULTAT\""
+    eval "$PUB_CMD $PARAMS"
+    echo "$PUB_CMD $PARAMS"
+
+    REZULTAT=$(echo "((${polje[1]} - ${polje[3]})/10)/125000" | bc -l | xargs printf %0.2f)
+    PARAMS="-t \"$MQTT_TOPIC_SCRIPT/wanupload\" -m \"$REZULTAT\""
+    eval "$PUB_CMD $PARAMS"
+    echo "$PUB_CMD $PARAMS"
+
+fi
+
 # adjust path if neccessary, add --server argument if you want to use specific speedtest server
 OUTPUT=$(/usr/bin/speedtest -f json --accept-license --accept-gdpr $SPEEDTEST_OPTIONS_SCRIPT)
 # test OUTPUT
@@ -95,20 +110,5 @@ if [[ $OUTPUT == $zacetek ]] && [[ $OUTPUT == $konec ]]; then
 
 fi
 
-
-if [[ ! -z "$ASUS_USER_SCRIPT" ]]; then
-    hitrost=$(sshpass -p $ASUS_PWD_SCRIPT /usr/bin/ssh $ASUS_IP_SCRIPT -l $ASUS_USER_SCRIPT -p $ASUS_PORT_SCRIPT -o StrictHostKeyChecking=accept-new 'bash -s' < /var/speedtest/scripts/wanspeed.sh)
-    read -a polje <<< $hitrost
-    REZULTAT=$(echo "((${polje[0]} - ${polje[2]})/10)/125000" | bc -l | xargs printf %0.2f)
-    PARAMS="-t \"$MQTT_TOPIC_SCRIPT/wandownload\" -m \"$REZULTAT\""
-    eval "$PUB_CMD $PARAMS"
-    echo "$PUB_CMD $PARAMS"
-
-    REZULTAT=$(echo "((${polje[1]} - ${polje[3]})/10)/125000" | bc -l | xargs printf %0.2f)
-    PARAMS="-t \"$MQTT_TOPIC_SCRIPT/wanupload\" -m \"$REZULTAT\""
-    eval "$PUB_CMD $PARAMS"
-    echo "$PUB_CMD $PARAMS"
-
-fi
 
 exit 0;
