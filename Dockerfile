@@ -1,5 +1,17 @@
 FROM debian
 
+ENV \
+    CRONJOB_ITERATION="30" \
+    MQTT_HOST="192.168.1.14" \
+    MQTT_PORT="1883" \
+    MQTT_TOPIC="Domek/speedtest" \
+    MQTT_OPTIONS="" \
+    SPEEDTEST_OPTIONS="--server-id=2198" \
+    ASUS_USER="" \
+    ASUS_PWD="" \
+    ASUS_IP="" \
+    ASUS_PORT="" 
+
 RUN apt-get update
 RUN apt-get install -y \
     gnupg1 \
