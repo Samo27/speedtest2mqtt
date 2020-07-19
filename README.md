@@ -29,4 +29,4 @@ You have to set your base topic in MQTT_TOPIC. Available subscriptions:
 | WAN Upload in Mbits | $MQTT_TOPIC/wanupload |
 
 ###### Example 
-If you want to subscribe to the topic for speedtest download and base topic is *internetspeed/test*: **internetspeedtest/test/download**
+If you want to subscribe to the topic for speedtest download and base topic is *internetspeed/test*: **internetspeed/test/download**
