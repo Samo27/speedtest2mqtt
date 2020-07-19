@@ -8,7 +8,7 @@ You can get the publicly available docker image here: samo27/speedtest2mqtt.
 | Variable | Type | Usage | Example value | Default |
 | --- | --- | --- | --- | --- |
 | CRONJOB_ITERATION | integer | Time between speedtests in minutes. Value 15 means the cronjob runs every 15 minutes. | 30 | 15 |
-| MQTT_HOST | string | IPv4 address of your MQTT broaker | 192.168.1.14 | 192.168.1.14 |
+| MQTT_HOST | string | IPv4 address of your MQTT broker | 192.168.1.14 | 192.168.1.14 |
 | MQTT_PORT | integer | Port for MQTT broaker | 1883 | 1833 |
 | MQTT_TOPIC | string | Base topic for MQTT | Domek/speedtest | Domek/speedtest |
 | MQTT_OPTIONS | string | Additional settings for MQTT | | none |
